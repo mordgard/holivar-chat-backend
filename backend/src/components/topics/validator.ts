@@ -6,7 +6,7 @@ import {
 } from "./schemas";
 
 const validateTopics = {
-  get(req: Request, res: Response, next: NextFunction) {
+  async get(req: Request, res: Response, next: NextFunction) {
     // 🤔
     next();
   },
