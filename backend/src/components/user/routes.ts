@@ -6,6 +6,6 @@ const router = Router();
 
 router.get("/", validateUsers.get, userService.getUsers);
 
-router.post("/", validateUsers.add);
+router.post("/", validateUsers.add, userService.addUser);
 
 export { router };
