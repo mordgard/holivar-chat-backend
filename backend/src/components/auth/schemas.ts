@@ -5,4 +5,4 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().min(6).max(16).required("Password is required")
 });
 
-export { loginSchema }
+export { loginSchema };
