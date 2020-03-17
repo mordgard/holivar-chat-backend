@@ -6,26 +6,26 @@ const router = Router();
 
 router.get(
   "/",
-  validateTopics.get,
+  validateTopics.getTopics,
   topicsService.getTopics
 );
 
 router.post(
   "/",
-  validateTopics.add,
+  validateTopics.addNewTopic,
   topicsService.addNewTopic
-);
+); // TODO: active moderators only
 
 router.put(
   "/:topicId",
-  validateTopics.update,
+  validateTopics.updateTopic,
   topicsService.updateTopic
-);
+); // TODO: active moderators only
 
 router.delete(
   "/:topicId",
-  validateTopics.delete,
+  validateTopics.deleteTopic,
   topicsService.deleteTopic
-);
+); // TODO: active moderators only
 
 export { router };
