@@ -22,6 +22,32 @@ const userService = {
       res.status(500).send(error);
       logger.error(error.message);
     }
+  },
+  async findUserByEmail(email: string) {
+    try {
+      return await User.findOne({ email });
+    } catch (error) {
+      logger.error(error.message);
+      return error;
+    }
+  },
+  async findUserById(id: string) {
+    try {
+      return await User.findById(id);
+    } catch (error) {
+      logger.error(error.message);
+      return error;
+    }
+  },
+  async activateUser(req: Request, res: Response) {
+    try {
+      const { userId } = req.params;
+      const user = await User.findByIdAndUpdate({ _id: userId }, { status: "active" });
+      res.status(200).send(user);
+    } catch (error) {
+      res.status(500).send(error);
+      logger.error(error.message);
+    }
   }
 };
 
