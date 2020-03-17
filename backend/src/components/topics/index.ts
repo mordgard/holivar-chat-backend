@@ -1,3 +1,3 @@
-import { router as topicRoutes } from "./routes";
+import { router } from "./routes";
 
-export { topicRoutes };
+export { router };
