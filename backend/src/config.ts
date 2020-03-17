@@ -8,7 +8,8 @@ validateEnv();
 const config = {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
-  mongoUri: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}${process.env.MONGO_PATH}`
+  mongoUri: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}${process.env.MONGO_PATH}`,
+  jwtSecret: process.env.JWT_SECRET
 };
 
 export { config };
