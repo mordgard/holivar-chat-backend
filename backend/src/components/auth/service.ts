@@ -1,4 +1,4 @@
-import { Request, Response, RouterOptions } from "express";
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { config } from "../../config";
 import { logger } from "../../utils";
