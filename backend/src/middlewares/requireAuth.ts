@@ -10,7 +10,7 @@ interface IPayload {
 }
 
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
-  const accessToken = (req.header("Authorization") || "").split("Bearer ")[1];
+  const accessToken = (req.header("Authorization") || "").split(" ")[1];
 
   if (!accessToken) {
     logger.error("Token isn't provided");
@@ -28,16 +28,17 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
       res.status(403).json({ message: "Token verification failed" });
     }
 
-    const userId = payload.id;
+    const { id } = payload;
 
     try {
-      const user = await userService.findUserById(userId);
+      const user = await userService.findUserById(id);
 
       if (!user) {
         logger.error("User not found");
         res.status(403).json({ message: "User not found" });
       }
 
+      req.body.user = user;
       next();
     } catch (dbError) {
       logger.error(dbError.message);
