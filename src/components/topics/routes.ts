@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { requireAuth, requireUserStatus } from "../../middlewares";
 import { topicsService } from "./service";
 import { validateTopics } from "./validator";
 
@@ -12,20 +13,26 @@ router.get(
 
 router.post(
   "/",
+  requireAuth,
+  requireUserStatus("active"),
   validateTopics.addNewTopic,
   topicsService.addNewTopic
-); // TODO: active moderators only
+);
 
 router.put(
   "/:topicId",
+  requireAuth,
+  requireUserStatus("active"),
   validateTopics.updateTopic,
   topicsService.updateTopic
-); // TODO: active moderators only
+);
 
 router.delete(
   "/:topicId",
+  requireAuth,
+  requireUserStatus("active"),
   validateTopics.deleteTopic,
   topicsService.deleteTopic
-); // TODO: active moderators only
+);
 
 export { router };
