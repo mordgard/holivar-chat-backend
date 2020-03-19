@@ -42,7 +42,7 @@ const userService = {
   async activateUser(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      const user = await User.findByIdAndUpdate({ _id: userId }, { status: "active" });
+      const user = await User.findByIdAndUpdate(userId, { status: "active" });
       res.status(200).send(user);
     } catch (error) {
       res.status(500).send(error);
