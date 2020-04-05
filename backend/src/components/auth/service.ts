@@ -14,6 +14,10 @@ const authService = {
         res.status(404).json({ message: `User with email - ${email} not found` });
       }
 
+      if (password !== user.password) {
+        res.status(400).json({ message: "Login failed. Wrong password" });
+      }
+
       const accessToken = jwt.sign({ id: user._id }, config.jwtSecret);
       res.status(200).json({ ...user.toObject(), accessToken });
     } catch (error) {
