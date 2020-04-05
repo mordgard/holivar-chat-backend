@@ -19,31 +19,27 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
 
   jwt.verify(accessToken, config.jwtSecret, async (verificationError, payload: IPayload) => {
     if (verificationError) {
-      logger.error(verificationError.message);
+      logger.error(verificationError);
       res.status(403).json({ message: "Token verification failed" });
-    }
+    } else {
+      const { id } = payload;
 
-    if (typeof payload !== "object" || typeof payload.id !== "string") {
-      logger.error("Wrong token payload");
-      res.status(403).json({ message: "Token verification failed" });
-    }
+      try {
+        const user = await userService.findUserById(id);
 
-    const { id } = payload;
+        if (!user) {
+          logger.error("User not found");
+          res.status(403).json({ message: "User not found" });
+        }
 
-    try {
-      const user = await userService.findUserById(id);
-
-      if (!user) {
-        logger.error("User not found");
-        res.status(403).json({ message: "User not found" });
+        req.body.user = user;
+        next();
+      } catch (dbError) {
+        logger.error(dbError.message);
+        res.status(500).json({ error: dbError, message: "Authorization failed. Internal server error" });
       }
-
-      req.body.user = user;
-      next();
-    } catch (dbError) {
-      logger.error(dbError.message);
-      res.status(500).json({ error: dbError, message: "Authorization failed. Internal server error" });
     }
+
   });
 };
 
