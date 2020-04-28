@@ -32,11 +32,12 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
           res.status(403).json({ message: "User not found" });
         }
 
+        // ? res.locals.authenticated
         req.body.user = user;
         next();
       } catch (dbError) {
         logger.error(dbError.message);
-        res.status(500).json({ error: dbError, message: "Authorization failed. Internal server error" });
+        res.status(500).json({ message: "Authorization failed. Internal server error" });
       }
     }
 
