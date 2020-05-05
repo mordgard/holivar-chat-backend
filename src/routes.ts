@@ -1,7 +1,7 @@
-import { router as authRoutes } from "./components/auth";
-import { router as topicsRoutes } from "./components/topics";
-import { router as userRoutes } from "./components/user";
+import { router as auth } from "./components/auth";
+import { router as topics } from "./components/topics";
+import { router as user } from "./components/user";
 
-const routes = { topicsRoutes, userRoutes, authRoutes };
+const routes = { topics, user, auth };
 
 export { routes };
