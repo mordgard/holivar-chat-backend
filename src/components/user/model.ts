@@ -15,7 +15,6 @@ const userSchema: Schema = new Schema({
     type: String,
     required: true,
     minlength: 6,
-    maxlength: 16
   },
   status: {
     type: String,
