@@ -1,12 +1,17 @@
+import { hash } from "bcrypt";
 import { Request, Response } from "express";
+import pick from "lodash/pick";
 import { logger } from "../../utils";
 import { User } from "./model";
 
 const userService = {
   async getUsers(req: Request, res: Response) {
     try {
-      const users = await User.find({});
-      res.status(200).send(users);
+      const users = await User.find({}); // TODO use mongoose schemas for filter??
+
+      const clearedUsers = users.map(user => pick(user, ["id", "status", "role", "email"]));
+
+      res.status(200).send(clearedUsers);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error.message);
@@ -15,9 +20,13 @@ const userService = {
   async addUser(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const user = new User({ email, password });
+
+      const hashPassword = await hash(password, 10);
+
+      const user = new User({ email, password: hashPassword });
       await user.save();
-      res.status(200).send(user);
+
+      res.sendStatus(200);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error.message);
@@ -25,7 +34,8 @@ const userService = {
   },
   async findUserByEmail(email: string) {
     try {
-      return await User.findOne({ email });
+      const user = await User.findOne({ email });
+      return pick(user, ["id", "status", "role", "email"]);
     } catch (error) {
       logger.error(error.message);
       return error;
@@ -42,8 +52,8 @@ const userService = {
   async activateUser(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      const user = await User.findByIdAndUpdate(userId, { status: "active" });
-      res.status(200).send(user);
+      await User.findByIdAndUpdate(userId, { status: "active" });
+      res.sendStatus(200);
     } catch (error) {
       res.status(500).send(error);
       logger.error(error.message);
