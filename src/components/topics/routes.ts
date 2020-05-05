@@ -1,30 +1,37 @@
 import { Router } from "express";
+import { requireAuth, requireUserStatus } from "../../middlewares";
 import { topicsService } from "./service";
 import { validateTopics } from "./validator";
 
 const router = Router();
 
 router.get(
-  "/topics",
-  validateTopics.get,
+  "/",
+  validateTopics.getTopics,
   topicsService.getTopics
 );
 
 router.post(
-  "/topics",
-  validateTopics.add,
+  "/",
+  requireAuth,
+  requireUserStatus("active"),
+  validateTopics.addNewTopic,
   topicsService.addNewTopic
 );
 
 router.put(
-  "/topics/:topicId",
-  validateTopics.update,
+  "/:topicId",
+  requireAuth,
+  requireUserStatus("active"),
+  validateTopics.updateTopic,
   topicsService.updateTopic
 );
 
 router.delete(
-  "/topics/:topicId",
-  validateTopics.delete,
+  "/:topicId",
+  requireAuth,
+  requireUserStatus("active"),
+  validateTopics.deleteTopic,
   topicsService.deleteTopic
 );
 

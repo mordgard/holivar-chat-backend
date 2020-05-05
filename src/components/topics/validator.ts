@@ -6,11 +6,11 @@ import {
 } from "./schemas";
 
 const validateTopics = {
-  get(req: Request, res: Response, next: NextFunction) {
+  async getTopics(req: Request, res: Response, next: NextFunction) {
     // 🤔
     next();
   },
-  async add(req: Request, res: Response, next: NextFunction) {
+  async addNewTopic(req: Request, res: Response, next: NextFunction) {
     try {
       const { title } = req.body;
       await addTopicSchema.validate({ title }, { abortEarly: false });
@@ -19,7 +19,7 @@ const validateTopics = {
       res.status(400).json({ error });
     }
   },
-  async update(req: Request, res: Response, next: NextFunction) {
+  async updateTopic(req: Request, res: Response, next: NextFunction) {
     try {
       const { topicId } = req.params;
       const { title } = req.body;
@@ -29,7 +29,7 @@ const validateTopics = {
       res.status(400).json({ error });
     }
   },
-  async delete(req: Request, res: Response, next: NextFunction) {
+  async deleteTopic(req: Request, res: Response, next: NextFunction) {
     try {
       const { topicId } = req.params;
       await deleteTopicSchema.validate({ topicId }, { abortEarly: false });
