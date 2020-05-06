@@ -9,7 +9,7 @@ const topicsService = {
       const topics = await Topic.find({});
       res.status(200).send(topics);
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   },
@@ -20,7 +20,7 @@ const topicsService = {
       await topic.save();
       res.status(200).send(topic);
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   },
@@ -35,7 +35,7 @@ const topicsService = {
         res.sendStatus(404);
       }
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   },
@@ -49,7 +49,7 @@ const topicsService = {
         res.sendStatus(404);
       }
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   }

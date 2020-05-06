@@ -23,14 +23,14 @@ const authService = {
         }
 
         const accessToken = jwt.sign({ id: user._id }, config.jwtSecret);
-        res.status(200).json({ ...user.toObject(), accessToken });
+        res.status(200).json({ accessToken });
       } catch (error) {
-        res.status(500).send(error);
+        res.sendStatus(500);
         logger.error(error.message);
       }
 
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   }
