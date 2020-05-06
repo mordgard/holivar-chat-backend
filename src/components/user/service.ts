@@ -13,7 +13,7 @@ const userService = {
 
       res.status(200).send(clearedUsers);
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   },
@@ -28,14 +28,13 @@ const userService = {
 
       res.sendStatus(200);
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   },
   async findUserByEmail(email: string) {
     try {
-      const user = await User.findOne({ email });
-      return pick(user, ["id", "status", "role", "email"]);
+      return await User.findOne({ email });
     } catch (error) {
       logger.error(error.message);
       return error;
@@ -55,7 +54,7 @@ const userService = {
       await User.findByIdAndUpdate(userId, { status: "active" });
       res.sendStatus(200);
     } catch (error) {
-      res.status(500).send(error);
+      res.sendStatus(500);
       logger.error(error.message);
     }
   }
