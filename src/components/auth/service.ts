@@ -12,14 +12,18 @@ const authService = {
       const user = await userService.findUserByEmail(email);
 
       if (!user) {
-        res.status(404).json({ message: `User with email - ${email} not found` });
+        return res
+          .status(404)
+          .json({ message: `User with email - ${email} not found` });
       }
 
       try {
         const isValidPassword = await compare(password, user.password);
 
         if (!isValidPassword) {
-          res.status(400).json({ message: "Failed to login. Wrong password" });
+          return res
+            .status(400)
+            .json({ message: "Failed to login. Wrong password" });
         }
 
         const accessToken = jwt.sign({ id: user._id }, config.jwtSecret);
@@ -28,12 +32,11 @@ const authService = {
         res.sendStatus(500);
         logger.error(error.message);
       }
-
     } catch (error) {
       res.sendStatus(500);
       logger.error(error.message);
     }
-  }
+  },
 };
 
 export { authService };

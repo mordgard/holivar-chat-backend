@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
-    "removeComments": true,
-    "noImplicitReturns": true,
+    "removeComments": false,
+    "noImplicitReturns": false,
     "noEmitOnError": true,
     "baseUrl": ".",
     "paths": {

@@ -8,6 +8,7 @@ const app: express.Application = express();
 connectToDb();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use("/api/v1/topics", routes.topics);
 app.use("/api/v1/users", routes.user);
