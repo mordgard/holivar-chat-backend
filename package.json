@@ -33,7 +33,7 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.149",
     "@types/mongoose": "^5.7.30",
-    "@types/node": "^13.1.0",
+    "@types/node": "^14.0.23",
     "@types/yup": "^0.29.3",
     "envalid": "^6.0.0",
     "nodemon": "^2.0.4",
