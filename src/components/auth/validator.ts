@@ -4,9 +4,9 @@ import { loginSchema } from "./schemas";
 
 const validateCredentials = {
   async login(req: Request, res: Response, next: NextFunction) {
+    logger.debug("Login body : %o", req.body);
     try {
       const { email, password } = req.body;
-      console.log(req.body);
       await loginSchema.validate({ email, password }, { abortEarly: false });
       next();
     } catch (error) {
