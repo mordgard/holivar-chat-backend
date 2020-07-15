@@ -15,22 +15,28 @@ const topicsService = {
       logger.error(error.message);
     }
   },
+
   async addNewTopic(req: Request, res: Response) {
     try {
       const { title } = req.body;
       const topic = new Topic({ title });
+
       await topic.save();
+
       res.status(200).send(topic);
     } catch (error) {
       res.sendStatus(500);
       logger.error(error.message);
     }
   },
+
   async updateTopic(req: Request, res: Response) {
     try {
       const { topicId } = req.params;
       const { title } = req.body;
+
       const topic = await Topic.findByIdAndUpdate(topicId, { title });
+
       if (topic) {
         res.status(200).send(topic);
       } else {
@@ -41,10 +47,12 @@ const topicsService = {
       logger.error(error.message);
     }
   },
+
   async deleteTopic(req: Request, res: Response) {
     try {
       const { topicId } = req.params;
       const topic = await Topic.findByIdAndDelete(topicId);
+
       if (topic) {
         res.status(200).send(topic);
       } else {
