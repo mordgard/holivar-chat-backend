@@ -6,7 +6,9 @@ import { Topic } from "./model";
 const topicsService = {
   async getTopics(req: Request, res: Response) {
     try {
-      const topics = await Topic.find({});
+      const rawTopics = await Topic.find({});
+      const topics = rawTopics.map(({ _id, title }) => ({ id: _id, title }));
+
       res.status(200).send(topics);
     } catch (error) {
       res.sendStatus(500);
@@ -52,7 +54,7 @@ const topicsService = {
       res.sendStatus(500);
       logger.error(error.message);
     }
-  }
+  },
 };
 
 export { topicsService };
