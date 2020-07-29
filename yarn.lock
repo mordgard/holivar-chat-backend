@@ -684,15 +684,15 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-envalid@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/envalid/-/envalid-6.0.0.tgz#fc55f068344f858ab35767641de40707e070c808"
-  integrity sha512-ervvE+KHy69NmJI1iEcBCkH9dlL5GaS6e4rbP2ohMKPjE2TLuq6E4tWEJojShpHqBz1k6OFgwEJOPTak3Tg5ow==
+envalid@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/envalid/-/envalid-6.0.2.tgz#7139770e089acc945c0e47b5075d72915d8683e8"
+  integrity sha512-ChJb9a5rjwZ/NkcXfBrzEl5cFZaGLg38N7MlWJkv5qsmSypX2WJe28LkoAWcklC60nKZXYKRlBbsjuJSjYw0Xg==
   dependencies:
     chalk "^3.0.0"
     dotenv "^8.2.0"
     meant "^1.0.1"
-    validator "^12.0.0"
+    validator "^13.0.0"
 
 escape-goat@^2.0.0:
   version "2.1.1"
@@ -2221,10 +2221,10 @@ uuid@^8.2.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.2.0.tgz#cb10dd6b118e2dada7d0cd9730ba7417c93d920e"
   integrity sha512-CYpGiFTUrmI6OBMkAdjSDM0k5h8SkkiTP4WAjQgDgNB1S3Ou9VBEvr6q0Kv2H1mMk7IWfxYGpMH5sd5AvcIV2Q==
 
-validator@^12.0.0:
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-12.1.0.tgz#a3a7315d5238cbc15e46ad8d5e479aafa7119925"
-  integrity sha512-gIC2RBuFRi574Rb9vewGCJ7TCLxHXNx6EKthEgs+Iz0pYa9a9Te1VLG/bGLsAyGWrqR5FfR7tbFUI7FEF2LiGA==
+validator@^13.0.0:
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.1.1.tgz#f8811368473d2173a9d8611572b58c5783f223bf"
+  integrity sha512-8GfPiwzzRoWTg7OV1zva1KvrSemuMkv07MA9TTl91hfhe+wKrsrgVN4H2QSFd/U/FhiU3iWPYVgvbsOGwhyFWw==
 
 vary@~1.1.2:
   version "1.1.2"
