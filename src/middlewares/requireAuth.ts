@@ -12,6 +12,8 @@ interface IPayload {
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   const accessToken = (req.header("Authorization") || "").split(" ")[1];
 
+  logger.debug("Require auth: %o", req.header("Authorization"));
+
   if (!accessToken) {
     logger.error("Token isn't provided");
     res.status(403).json({ message: "Token isn't provided" });

@@ -7,16 +7,17 @@ import { User } from "./model";
 const userService = {
   async getUsers(req: Request, res: Response) {
     try {
-      const users = await User.find({}); // TODO use mongoose schemas for filter??
+      const rawUsers = await User.find({});
 
-      const clearedUsers = users.map(user => pick(user, ["id", "status", "role", "email"]));
+      const users = rawUsers.map(user => pick(user, ["id", "status", "role", "email"]));
 
-      res.status(200).send(clearedUsers);
+      res.status(200).send(users);
     } catch (error) {
       res.sendStatus(500);
       logger.error(error.message);
     }
   },
+
   async addUser(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
@@ -32,6 +33,7 @@ const userService = {
       logger.error(error.message);
     }
   },
+
   async findUserByEmail(email: string) {
     try {
       return await User.findOne({ email });
@@ -40,6 +42,7 @@ const userService = {
       return error;
     }
   },
+
   async findUserById(id: string) {
     try {
       return await User.findById(id);
@@ -48,16 +51,18 @@ const userService = {
       return error;
     }
   },
+
   async activateUser(req: Request, res: Response) {
     try {
       const { userId } = req.params;
       await User.findByIdAndUpdate(userId, { status: "active" });
+
       res.sendStatus(200);
     } catch (error) {
       res.sendStatus(500);
       logger.error(error.message);
     }
-  }
+  },
 };
 
 export { userService };
