@@ -1,4 +1,3 @@
-import path from "path";
 import winston from "winston";
 const { format } = winston;
 
