@@ -12,6 +12,8 @@ router.put(
   requireAuth,
   requireUserRole("admin"),
   validateUsers.activateUser,
-  userService.activateUser);
+  userService.activateUser,
+);
+router.post("/topic-answer", requireAuth, validateUsers.topicAnswer, userService.topicAnswer);
 
 export { router };
