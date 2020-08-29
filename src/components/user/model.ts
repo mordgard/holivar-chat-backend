@@ -3,13 +3,16 @@ import { Document, Model, model, Schema } from "mongoose";
 interface IUser extends Document {
   email: string;
   password: string;
+  status: string;
+  role: string;
+  topicsAnswers: object[];
 }
 
 const userSchema: Schema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
@@ -19,13 +22,25 @@ const userSchema: Schema = new Schema({
   status: {
     type: String,
     enum: ["new", "active", "archived"],
-    default: "new"
+    default: "new",
   },
   role: {
     type: String,
     enum: ["moderator", "admin"],
-    default: "moderator"
-  }
+    default: "moderator",
+  },
+  topicsAnswers: [
+    {
+      topicId: {
+        type: String,
+        required: true,
+      },
+      answer: {
+        type: Boolean,
+        required: true,
+      },
+    },
+  ],
 });
 
 const User: Model<IUser> = model<IUser>("User", userSchema);
