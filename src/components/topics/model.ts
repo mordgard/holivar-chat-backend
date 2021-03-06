@@ -8,8 +8,8 @@ const topicSchema: Schema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
 const Topic: Model<ITopic> = model<ITopic>("Topic", topicSchema);

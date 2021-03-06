@@ -70,6 +70,7 @@ const userService = {
       logger.error(error.message);
     }
   },
+
   async topicAnswer(req: Request, res: Response) {
     logger.debug("topics answer service %o", res.locals.authenticated);
     const { id: userId } = res.locals.authenticated as IUserDto;
