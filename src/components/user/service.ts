@@ -1,9 +1,11 @@
 import { hash } from "bcrypt";
 import { Request, Response } from "express";
-import pick from "lodash/pick";
+import uniqBy from "lodash/uniqBy";
+import { Topic } from "../../types";
 import { logger } from "../../utils";
+import { Topic as TopicModel } from "../topics/model";
 import { User } from "./model";
-import { IUserDto } from "./userDto";
+import { UserDto } from "./userDto";
 
 const userService = {
   async getUsers(req: Request, res: Response) {
@@ -17,6 +19,7 @@ const userService = {
       };
 
       const users = await User.find({}, userProjection);
+      logger.debug("getUsers: %o", users);
 
       res.status(200).send(users);
     } catch (error) {
@@ -28,8 +31,8 @@ const userService = {
   async addUser(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-
       const hashPassword = await hash(password, 10);
+      logger.debug("addUser: %o", req.body);
 
       const user = new User({ email, password: hashPassword });
       await user.save();
@@ -43,7 +46,9 @@ const userService = {
 
   async findUserByEmail(email: string) {
     try {
-      return await User.findOne({ email });
+      const user = await User.findOne({ email });
+      logger.debug("findUserByEmail %o", user);
+      return user;
     } catch (error) {
       logger.error(error.message);
       return error;
@@ -52,7 +57,9 @@ const userService = {
 
   async findUserById(id: string) {
     try {
-      return await User.findById(id);
+      const user = await User.findById(id);
+      logger.debug("findUserById %o", user);
+      return user;
     } catch (error) {
       logger.error(error.message);
       return error;
@@ -63,7 +70,7 @@ const userService = {
     try {
       const { userId } = req.params;
       await User.findByIdAndUpdate(userId, { status: "active" });
-
+      logger.debug("activateUser %o", userId);
       res.sendStatus(200);
     } catch (error) {
       res.sendStatus(500);
@@ -71,22 +78,38 @@ const userService = {
     }
   },
 
-  async topicAnswer(req: Request, res: Response) {
-    logger.debug("topics answer service %o", res.locals.authenticated);
-    const { id: userId } = res.locals.authenticated as IUserDto;
-    const { topicId, answer } = req.body;
+  async getAnswers(req: Request, res: Response) {
+    const { topicsAnswers } = res.locals.authenticated as UserDto;
+    const answers = topicsAnswers.map(({ topicId, answer }) => ({ topicId, answer }));
+    logger.debug("getAnswers: %o", answers);
 
-    // TODO update answer if topicId exists or add new one
+    res.status(200).send(answers);
+  },
+
+  async topicAnswer(req: Request, res: Response) {
+    const { id: userId, topicsAnswers: oldAnswers } = res.locals.authenticated as UserDto;
+    const { topicId, answer } = req.body;
+    logger.debug("topicAnswer %o", res.locals.authenticated);
+
     try {
+      const rawTopics = await TopicModel.find({});
+
+      const topicIdsToRemove = uniqBy(oldAnswers, answer => rawTopics.some(topic => topic._id !== answer.topicId));
+      logger.debug("topicIdsToRemove %o", topicIdsToRemove);
+
       const { topicsAnswers } = await User.findByIdAndUpdate(
         userId,
-        { $push: { topicsAnswers: { topicId, answer } } },
+        {
+          $push: { topicsAnswers: { topicId, answer } },
+          // $pull: { topicsAnswers: { topicId: { $in: topicIdsToRemove } } },
+        },
         {
           new: true,
         },
       );
 
-      res.status(200).send(topicsAnswers);
+      const answers = topicsAnswers.map(({ topicId, answer }: Topic) => ({ topicId, answer }));
+      res.status(200).send(answers);
     } catch (error) {
       res.sendStatus(500);
       logger.error(error.message);

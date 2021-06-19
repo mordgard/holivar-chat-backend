@@ -14,6 +14,7 @@ router.put(
   validateUsers.activateUser,
   userService.activateUser,
 );
+router.get("/topic-answers", requireAuth, userService.getAnswers);
 router.post("/topic-answer", requireAuth, validateUsers.topicAnswer, userService.topicAnswer);
 
 export { router };

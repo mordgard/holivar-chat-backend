@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { userService, IUserDto } from "../components/user";
+import { userService, UserDto } from "../components/user";
 import { config } from "../config";
 import { logger } from "../utils";
 
@@ -34,7 +34,7 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
           res.status(403).json({ message: "User not found" });
         }
 
-        const userDto: IUserDto = user;
+        const userDto: UserDto = user;
 
         res.locals.authenticated = userDto;
         next();
