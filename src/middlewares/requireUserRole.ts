@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { logger } from "../utils";
-import { IUserDto } from "../components/user";
+import { UserDto } from "../components/user";
 
 const requireUserRole = (userRole: "moderator" | "admin") => {
   return (req: Request, res: Response, next: NextFunction) => {
     logger.debug("Require user role: %o", res.locals.authenticated);
-    const { role } = res.locals.authenticated as IUserDto;
+    const { role } = res.locals.authenticated as UserDto;
 
     if (userRole === role) {
       next();
