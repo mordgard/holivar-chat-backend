@@ -35,7 +35,7 @@
     "@types/lodash": "^4.14.169",
     "@types/mongoose": "^5.7.32",
     "@types/node": "^15.6.0",
-    "@types/socket.io": "^2.1.4",
+    "@types/socket.io": "^3.0.2",
     "@types/yup": "^0.29.6",
     "envalid": "^6.0.0",
     "nodemon": "^2.0.4",
